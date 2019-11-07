@@ -26,15 +26,14 @@
                                 <label for="preco">Preço</label>
                          <input type="number" class="form-control" name="preco" value="{{$prod->preco}}"
                                 id="preco" placeholder="{{$prod->estoque}}">
-         
-                                <br/>
-         
+                          
+                                
+                                <input type="hidden" class="form-control" name="idCategoria" value="{{$prod->categoria_id}}"
+                                id="idCategoria" >
+                                
+                               
                        
-
-
-
-
-
+                       
             </div>
             <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
             <button type="cancel" class="btn btn-danger btn-sm">Cancel</button>

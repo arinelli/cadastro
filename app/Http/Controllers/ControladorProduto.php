@@ -43,6 +43,23 @@ class ControladorProduto extends Controller
      */
     public function store(Request $request)
     {
+
+        $regras=[
+            'nome' => 'required|min:3|max:50',
+            'estoque' => 'required|min:1',
+            'preco' => 'required|min:1'
+        ];
+
+        $mensagens =[
+            'required'=> 'O atributo não pode estar em branco',
+            'nome.required' => 'O nome é requerido',
+             'estoque.required' => 'O estoque é requerido',
+             'preco.required' => 'O preco é requerido'
+        ];
+
+        $request->validate($regras,$mensagens);
+
+
         $prod = new Produto();
         $prod->nome =$request->input('nomeProduto');
         $prod->categoria_id =$request->input('idCategoria');
@@ -79,8 +96,10 @@ class ControladorProduto extends Controller
     public function edit($id)
     {
         $prod = Produto::find($id);
+        $cats = Categoria::find($prod->categoria_id);
         if(isset($prod)) {
             return view('editarproduto', compact('prod'));
+
         }
         return redirect('/produtos');
     }
@@ -97,6 +116,12 @@ class ControladorProduto extends Controller
         $prod = Produto::find($id);
         if(isset($prod)) {
             $prod->nome = $request->input('nomeProduto');
+            
+        $prod->estoque =$request->input('estoque');
+        $prod->preco = $request->input('preco');
+
+        $prod->categoria_id =$request->input('idCategoria');
+
             $prod->save();
         }
         return redirect('/produtos');
